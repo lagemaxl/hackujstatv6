@@ -47,24 +47,69 @@ function About() {
     },
   ];
 
+  const listVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        staggerChildren: 0.2, // postupné zobrazování položek
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+  };
+
   return (
     <div className="about-container">
       <h1>O aplikaci</h1>
-      <p>Tento projekt vznikl na hackathonu <b><a href="https://hackujstat.cz/" target="_blank"> &lt;HackujStátv6/&gt;</a></b> a slouží k ...</p>
+      <p>
+        Tento projekt vznikl na hackathonu{" "}
+        <b>
+          <a href="https://hackujstat.cz/" target="_blank">
+            {" "}
+            &lt;HackujStátv6/&gt;
+          </a>
+        </b>{" "}
+        a slouží jako pomocník při hledání školy. Aplikace zobrazuje školy a
+        školské zařízení v České republice a umožňuje vyhledávat podle různých
+        kritérií.đ
+      </p>
 
       <h2>Technologie</h2>
       <h3>Frontend</h3>
-      <ul className="tech-list">
-        <li>React</li>
-        <li>React Router</li>
-        <li>Leaflet</li>
-        <li>React Leaflet</li>
-      </ul>
-      <h3>Backend</h3>
-      <ul className="tech-list">
-        <li>FastApi</li>
-        <li>MariaDb</li>
-      </ul>
+      <motion.ul
+        className="tech-list"
+        initial="hidden"
+        animate="visible"
+        variants={listVariants}
+      >
+        <motion.li variants={itemVariants}>React</motion.li>
+        <motion.li variants={itemVariants}>React Router</motion.li>
+        <motion.li variants={itemVariants}>Leaflet</motion.li>
+        <motion.li variants={itemVariants}>React Leaflet</motion.li>
+      </motion.ul>
+
+      <motion.h3
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        Backend
+      </motion.h3>
+
+      <motion.ul
+        className="tech-list"
+        initial="hidden"
+        animate="visible"
+        variants={listVariants}
+      >
+        <motion.li variants={itemVariants}>FastAPI</motion.li>
+        <motion.li variants={itemVariants}>MariaDB</motion.li>
+      </motion.ul>
 
       <h2>Autoři</h2>
       <motion.div
