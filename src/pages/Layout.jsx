@@ -5,15 +5,17 @@ const Layout = () => {
   return (
     <>
       <nav>
-        <ul>
-          <h1>Mapa.jpg</h1>
-          <li>
-            <Link to="/">Mapa</Link>
-          </li>
-          <li>
-            <Link to="/about">O aplikaci</Link>
-          </li>
-        </ul>
+        <div className="nav-content">
+          <h1>Mapa ČR</h1>
+          <ul>
+            <li>
+              <Link to="/">Mapa</Link>
+            </li>
+            <li>
+              <Link to="/about">O aplikaci</Link>
+            </li>
+          </ul>
+        </div>
       </nav>
 
       <div className="outlet">
