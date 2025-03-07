@@ -12,6 +12,9 @@ const Layout = () => {
               <Link to="/">Mapa</Link>
             </li>
             <li>
+              <Link to="/budget">Rozpočet</Link>
+            </li>
+            <li>
               <Link to="/about">O aplikaci</Link>
             </li>
           </ul>
