@@ -2,3 +2,21 @@
 @media (prefers-color-scheme: light) {
 
 }
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #f4f4f4;
+}
+
+.leaflet-top {
+  bottom: 10px !important;
+  top: auto !important;
+}

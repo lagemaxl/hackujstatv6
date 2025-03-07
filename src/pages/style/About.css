@@ -1,0 +1,58 @@
+h1, h2 {
+    color: #2c3e50;
+}
+
+p {
+    font-size: 16px;
+    color: #333;
+}
+
+.tech-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.tech-list li {
+    background: #ecf0f1;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.author-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.author-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    width: 250px;
+}
+
+.author-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-links {
+    margin-top: 10px;
+}
+
+.author-links a {
+    margin: 0 5px;
+    color: #2c3e50;
+    transition: color 0.3s ease;
+}
+
+.author-links a:hover {
+    color: #2980b9;
+}

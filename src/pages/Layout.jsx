@@ -1,25 +1,26 @@
 import { Outlet, Link } from "react-router-dom";
+import "./style/Layout.css";
 
 const Layout = () => {
   return (
     <>
       <nav>
         <ul>
+          <h1>Mapa.jpg</h1>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Mapa</Link>
           </li>
           <li>
-            <Link to="/blogs">Blogs</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
+            <Link to="/about">O aplikaci</Link>
           </li>
         </ul>
       </nav>
 
-      <Outlet />
+      <div className="outlet">
+        <Outlet />
+      </div>
     </>
-  )
+  );
 };
 
 export default Layout;

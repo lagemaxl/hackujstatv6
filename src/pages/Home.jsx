@@ -36,9 +36,14 @@ const Home = () => {
             data={geojsonData}
             style={geoJSONStyle}
             eventHandlers={{
+              click: (e) => console.log(e.layer.feature.nationalCode),
             }}
           />
         )}
+
+        <Marker position={[49.7437572, 15.3386383]}>
+          <Popup>Česká republika</Popup>
+        </Marker>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
