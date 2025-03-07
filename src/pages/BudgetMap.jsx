@@ -8,16 +8,13 @@ import { load } from "@loaders.gl/core";
 import { CSVLoader } from "@loaders.gl/csv";
 import "maplibre-gl/dist/maplibre-gl.css";
 
-// Zdroj dat
 const DATA_URL =
   "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv";
 
-// Nastavení světel
 const ambientLight = new AmbientLight({ color: [255, 255, 255], intensity: 1.0 });
 const pointLight1 = new PointLight({ color: [255, 255, 255], intensity: 0.8, position: [-122.4, 37.8, 80000] });
 const lightingEffect = new LightingEffect({ ambientLight, pointLight1 });
 
-// Počáteční pohled
 const INITIAL_VIEW_STATE = {
   longitude: -122.4,
   latitude: 37.8,
@@ -28,7 +25,6 @@ const INITIAL_VIEW_STATE = {
 
 const MAP_STYLE = "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json";
 
-// Barevné spektrum
 const colorRange = [
   [1, 152, 189],
   [73, 227, 206],

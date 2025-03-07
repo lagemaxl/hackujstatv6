@@ -1,7 +1,8 @@
 :root {
     --primary: #FAF9FF;
     --primary-hover: #E0E0E0;
-    --secondary: #2c3e50;
+    /*--secondary: #2c3e50;*/
+    --secondary: #384c91;
     --shade: #333;
     --link: #2980b9;
     --tertiary: #FFFFFF;
