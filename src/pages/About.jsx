@@ -4,6 +4,7 @@ import {
   IconBrandGithub,
   IconBrandLinkedin,
   IconWorld,
+  IconSchool,
 } from "@tabler/icons-react";
 
 function About() {
@@ -37,25 +38,6 @@ function About() {
       <h2>Autoři</h2>
       <div className="author-list">
         <AuthorCard
-          name="Ladislav Pokorný"
-          email="ladislavpokorny05@gmail.com"
-          img="LadislavPokorný"
-          linkedinUrl="https://www.linkedin.com/in/ladislav-pokorny/"
-          githubUrl="https://github.com/lagemaxl"
-          webUrl="https://ladislavpokorny.cz/"
-          work="Frontend Developer v DCUK"
-          workUrl="https://dcuk.cz/"
-        />
-        <AuthorCard
-          name="Tomáš Kroupa"
-          email="tom@bagros"
-          img="TomášKroupa"
-          linkedinUrl="https://www.linkedin.com/in/kroupatom/"
-          githubUrl="https://github.com/LosBagros"
-          webUrl="http://bagros.eu/"
-          work="DCUK, XDENT, CDN77"
-        />
-        <AuthorCard
           name="Vojta Riedl"
           email="vojtariedl66@gmail.com"
           img="VojtaRiedl"
@@ -64,6 +46,31 @@ function About() {
           webUrl=""
           work="Backend Developer v DCUK"
           workUrl="https://dcuk.cz/"
+          school="UJEP"
+          schoolUrl="https://www.ujep.cz/"
+        />
+        <AuthorCard
+          name="Ladislav Pokorný"
+          email="ladislavpokorny05@gmail.com"
+          img="LadislavPokorný"
+          linkedinUrl="https://www.linkedin.com/in/ladislav-pokorny/"
+          githubUrl="https://github.com/lagemaxl"
+          webUrl="https://ladislavpokorny.cz/"
+          work="Frontend Developer v DCUK"
+          workUrl="https://dcuk.cz/"
+          school="SPSUL"
+          schoolUrl="https://www.spsul.cz/"
+        />
+        <AuthorCard
+          name="Tomáš Kroupa"
+          email="tom@bagros.eu"
+          img="TomášKroupa"
+          linkedinUrl="https://www.linkedin.com/in/kroupatom/"
+          githubUrl="https://github.com/LosBagros"
+          webUrl="http://bagros.eu/"
+          work="DCUK, XDENT, CDN77"
+          school="SPSUL"
+          schoolUrl="https://www.spsul.cz/"
         />
       </div>
     </div>
@@ -79,11 +86,18 @@ function AuthorCard({
   webUrl,
   work,
   workUrl,
+  school,
+  schoolUrl,
 }) {
   return (
     <div className="author-card">
       <img src={`img/${img}.jpg`} alt={name} className="author-img" />
       <h3>{name}</h3>
+      <a href={schoolUrl}>
+        <div className="school">
+          <IconSchool color="black" /> <p>{school}</p>
+        </div>
+      </a>
       <a href={workUrl}>
         <p>{work}</p>
       </a>
