@@ -5,3 +5,16 @@
     top: 0;
     left: 0;
 }
+
+.zoom-back-button {
+    position: absolute;
+    top: 80px;
+    left: 10px;
+    z-index: 1000;
+    background-color: var(--secondary);
+    color: var(--primary);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
