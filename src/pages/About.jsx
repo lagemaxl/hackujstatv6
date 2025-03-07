@@ -6,20 +6,51 @@ import {
   IconWorld,
   IconSchool,
 } from "@tabler/icons-react";
+import { motion } from "framer-motion";
 
 function About() {
+  const authors = [
+    {
+      name: "Vojta Riedl",
+      email: "vojtariedl66@gmail.com",
+      img: "VojtaRiedl",
+      linkedinUrl: "https://www.linkedin.com/in/vojt%C4%9Bch-riedl-791216272/",
+      githubUrl: "https://github.com/VojtechRiedl",
+      webUrl: "",
+      work: "Backend Developer v DCUK",
+      workUrl: "https://dcuk.cz/",
+      school: "UJEP",
+      schoolUrl: "https://www.ujep.cz/",
+    },
+    {
+      name: "Ladislav Pokorný",
+      email: "ladislavpokorny05@gmail.com",
+      img: "LadislavPokorný",
+      linkedinUrl: "https://www.linkedin.com/in/ladislav-pokorny/",
+      githubUrl: "https://github.com/lagemaxl",
+      webUrl: "https://ladislavpokorny.cz/",
+      work: "Frontend Developer v DCUK",
+      workUrl: "https://dcuk.cz/",
+      school: "SPSUL",
+      schoolUrl: "https://www.spsul.cz/",
+    },
+    {
+      name: "Tomáš Kroupa",
+      email: "tom@bagros.eu",
+      img: "TomášKroupa",
+      linkedinUrl: "https://www.linkedin.com/in/kroupatom/",
+      githubUrl: "https://github.com/LosBagros",
+      webUrl: "http://bagros.eu/",
+      work: "DCUK, XDENT, CDN77",
+      school: "SPSUL",
+      schoolUrl: "https://www.spsul.cz/",
+    },
+  ];
+
   return (
     <div className="about-container">
       <h1>O aplikaci</h1>
-      <p>
-        Tato aplikace je vytvořena v rámci předmětu{" "}
-        <strong>Programování pro web a mobilní zařízení</strong> na{" "}
-        <strong>Fakultě informatiky Masarykovy univerzity</strong>.
-        <br />
-        <br />
-        Aplikace zobrazuje mapu České republiky s kraji a okresy. Po kliknutí na
-        kraj se zobrazí jeho název.
-      </p>
+      <p>Tento projekt vznikl na hackathonu <b><a href="https://hackujstat.cz/" target="_blank"> &lt;HackujStátv6/&gt;</a></b> a slouží k ...</p>
 
       <h2>Technologie</h2>
       <h3>Frontend</h3>
@@ -36,43 +67,20 @@ function About() {
       </ul>
 
       <h2>Autoři</h2>
-      <div className="author-list">
-        <AuthorCard
-          name="Vojta Riedl"
-          email="vojtariedl66@gmail.com"
-          img="VojtaRiedl"
-          linkedinUrl="https://www.linkedin.com/in/vojt%C4%9Bch-riedl-791216272/"
-          githubUrl="https://github.com/VojtechRiedl"
-          webUrl=""
-          work="Backend Developer v DCUK"
-          workUrl="https://dcuk.cz/"
-          school="UJEP"
-          schoolUrl="https://www.ujep.cz/"
-        />
-        <AuthorCard
-          name="Ladislav Pokorný"
-          email="ladislavpokorny05@gmail.com"
-          img="LadislavPokorný"
-          linkedinUrl="https://www.linkedin.com/in/ladislav-pokorny/"
-          githubUrl="https://github.com/lagemaxl"
-          webUrl="https://ladislavpokorny.cz/"
-          work="Frontend Developer v DCUK"
-          workUrl="https://dcuk.cz/"
-          school="SPSUL"
-          schoolUrl="https://www.spsul.cz/"
-        />
-        <AuthorCard
-          name="Tomáš Kroupa"
-          email="tom@bagros.eu"
-          img="TomášKroupa"
-          linkedinUrl="https://www.linkedin.com/in/kroupatom/"
-          githubUrl="https://github.com/LosBagros"
-          webUrl="http://bagros.eu/"
-          work="DCUK, XDENT, CDN77"
-          school="SPSUL"
-          schoolUrl="https://www.spsul.cz/"
-        />
-      </div>
+      <motion.div
+        className="author-list"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: {
+            transition: { staggerChildren: 0.3 },
+          },
+        }}
+      >
+        {authors.map((author, index) => (
+          <AuthorCard key={index} {...author} custom={index} />
+        ))}
+      </motion.div>
     </div>
   );
 }
@@ -88,17 +96,23 @@ function AuthorCard({
   workUrl,
   school,
   schoolUrl,
+  custom,
 }) {
   return (
-    <div className="author-card">
+    <motion.div
+      className="author-card"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: custom * 0.3 }}
+    >
       <img src={`img/${img}.jpg`} alt={name} className="author-img" />
       <h3>{name}</h3>
-      <a href={schoolUrl}>
+      <a href={schoolUrl} target="_blank">
         <div className="school">
           <IconSchool color="black" /> <p>{school}</p>
         </div>
       </a>
-      <a href={workUrl}>
+      <a href={workUrl} target="_blank">
         <p>{work}</p>
       </a>
       <p>
@@ -123,7 +137,7 @@ function AuthorCard({
           </a>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
