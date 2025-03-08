@@ -12,7 +12,7 @@ import {
   IconWifi,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
-import { Modal, Button, Table, Checkbox } from "@mantine/core";
+import { Modal, Button, Table, Checkbox, Input } from "@mantine/core";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { div } from "framer-motion/client";
 
@@ -73,7 +73,7 @@ const Home = () => {
       };
 
       setDistrictsGeojsonData(filteredDistricts);
-      setLastFetchedRegion(region); // Uložíme, že už jsme okresy pro tento kraj načetli
+      setLastFetchedRegion(region);
     } catch (error) {
       console.error("Error loading districts:", error);
     }
@@ -151,6 +151,7 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
   const [schools, setSchools] = useState([]);
   const [schoolDetails, setSchoolDetails] = useState(null);
   const [schoolFinance, setSchoolFinance] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([
     "Mateřská škola",
     "Základní škola",
@@ -272,7 +273,13 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
     }).format(amount);
   };
 
-  const filteredSchools = schools.filter(school => selectedCategories.includes(school.zarizeni));
+  const filteredSchools = schools.filter((school) =>
+    selectedCategories.includes(school.zarizeni)
+  );
+
+  const filteredSchoolsInput = filteredSchools.filter((school) =>
+    school.nazev.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <>
@@ -453,8 +460,8 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
       )}
 
       <MarkerClusterGroup>
-        {filteredSchools &&
-          filteredSchools.map((school, index) => {
+        {filteredSchoolsInput &&
+          filteredSchoolsInput.map((school, index) => {
             let icon;
             switch (school.zarizeni) {
               case "Mateřská škola":
@@ -509,6 +516,13 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
           {selectedDistrict ? selectedDistrict.name : region.name}
           {selectedDistrict ? " (okres)" : " (kraj)"}
         </h2>
+        {selectedDistrict && (
+          <Input
+            placeholder="Hledej školu!"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        )}
       </motion.div>
     </>
   );
