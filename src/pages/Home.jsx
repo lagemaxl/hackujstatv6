@@ -6,6 +6,7 @@ import { Marker } from "react-leaflet";
 import { IconArrowLeft, IconSchool } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { Modal, Button } from "@mantine/core";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 
 const Home = () => {
   const [geojsonData, setGeojsonData] = useState(null);
@@ -254,35 +255,41 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
         />
       )}
 
-      {schools &&
-        schools.map((school, index) => {
-          let icon;
-          switch (school.zarizeni) {
-            case "Mateřská škola":
-              icon = SkolkaIcon;
-              break;
-            case "Základní škola":
-              icon = ZakladkaIcon;
-              break;
-            case "Střední škola":
-              icon = StredniIcon;
-              break;
-            case "Vyšší odborná škola":
-              icon = VejskaIcon;
-              break;
-            default:
-              icon = SkolkaIcon;
-          }
+      <MarkerClusterGroup>
+        {schools &&
+          schools.map((school, index) => {
+            let icon;
+            switch (school.zarizeni) {
+              case "Mateřská škola":
+                icon = SkolkaIcon;
+                break;
+              case "Základní škola":
+                icon = ZakladkaIcon;
+                break;
+              case "Střední škola":
+                icon = StredniIcon;
+                break;
+              case "Vyšší odborná škola":
+                icon = VejskaIcon;
+                break;
+              default:
+                icon = SkolkaIcon;
+            }
 
-          return (
-            <Marker key={index} position={[school.lantitude, school.lontitude]} icon={icon}>
-              <Popup>
-                <h3>{school.nazev}</h3>
-                <p>{school.zarizeni}</p>
-              </Popup>
-            </Marker>
-          );
-        })}
+            return (
+              <Marker
+                key={index}
+                position={[school.lantitude, school.lontitude]}
+                icon={icon}
+              >
+                <Popup>
+                  <h3>{school.nazev}</h3>
+                  <p>{school.zarizeni}</p>
+                </Popup>
+              </Marker>
+            );
+          })}
+      </MarkerClusterGroup>
 
       <motion.button
         onClick={selectedDistrict ? zoomOutToRegion : zoomToRepublic}

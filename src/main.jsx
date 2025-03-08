@@ -6,6 +6,7 @@ import { MantineProvider } from "@mantine/core";
 import "./index.css";
 import "./pages/style/Theme.css";
 import "@mantine/core/styles.css";
+import 'react-leaflet-markercluster/styles'
 
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
