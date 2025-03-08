@@ -7,6 +7,7 @@ import { AmbientLight, PointLight, LightingEffect } from "@deck.gl/core";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Loader, Slider } from "@mantine/core";
 import { HeatmapLayer } from "@deck.gl/aggregation-layers";
+import "./style/BudgetMap.css";
 
 const ambientLight = new AmbientLight({
   color: [255, 255, 255],
@@ -15,13 +16,13 @@ const ambientLight = new AmbientLight({
 const pointLight1 = new PointLight({
   color: [255, 255, 255],
   intensity: 0.8,
-  position: [16.6, 49.2, 80000],
+  position: [16.5, 50, 80000],
 });
 const lightingEffect = new LightingEffect({ ambientLight, pointLight1 });
 
 const INITIAL_VIEW_STATE = {
-  longitude: 16.6,
-  latitude: 49.2,
+  longitude: 16,
+  latitude: 49.7,
   zoom: 7,
   pitch: 40,
   bearing: -20,
@@ -58,8 +59,8 @@ function BudgetMap() {
 
   if (loading) {
     return (
-      <div>
-        <Loader position="center" />
+      <div className="loader-cont">
+        <Loader position="center" color="var(--secondary)" />
       </div>
     );
   }
@@ -104,8 +105,9 @@ function BudgetMap() {
       >
         <Map mapStyle={MAP_STYLE} />
       </DeckGL>
+      <div className="slider-cont">
       <Slider
-        style={{ width: "80%", position: "absolute", bottom: "5em" }}
+        style={{ width: "80%", position: "absolute", bottom: "5em"}}
         min={1012}
         max={2312}
         step={100}
@@ -130,6 +132,7 @@ function BudgetMap() {
           { value: 2312, label: "2023" },
         ]}
       />
+      </div>
     </>
   );
 }
