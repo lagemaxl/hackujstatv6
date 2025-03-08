@@ -17,7 +17,7 @@ const Home = () => {
   const [modalOpened, setModalOpened] = useState(false);
 
   useEffect(() => {
-    const firstVisit = localStorage.getItem("firstVisittttt");
+    const firstVisit = localStorage.getItem("firstVisit");
     if (!firstVisit) {
       localStorage.setItem("firstVisit", "true");
       setModalOpened(true);
@@ -185,7 +185,6 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
     }
   }, [selectedDistrict, districts]);
 
-
   const zoomOutToRegion = () => {
     setSelectedDistrict(null);
     setSchools([]);
@@ -267,6 +266,51 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
  </div> 
 )}
 */}
+
+      {schoolDetails && (
+        <Modal
+          opened={Boolean(schoolDetails)}
+          onClose={() => setSchoolDetails(null)}
+          title={schoolDetails?.nazev ?? "Detaily školy"}
+          size={"xl"}
+        >
+          {schoolDetails && (
+            <div>
+              <p>
+                <strong>IČO:</strong> {schoolDetails.ico}
+              </p>
+              <p>
+                <strong>Ředitel:</strong> {schoolDetails.head_name}
+              </p>
+              <p>
+                <strong>Adresa:</strong> {schoolDetails.head_address}
+              </p>
+              <p>
+                <strong>Počet studentů:</strong> {schoolDetails.pocet_studentu}
+              </p>
+              <p>
+                <strong>Počet učeben:</strong> {schoolDetails.pocet_uceben}
+              </p>
+              <p>
+                <strong>Počet PC:</strong> {schoolDetails.pocet_pc}
+              </p>
+              <p>
+                <strong>Počet notebooků:</strong> {schoolDetails.pocet_notebook}
+              </p>
+              <p>
+                <strong>WiFi:</strong> {schoolDetails.wifi ? "Ano" : "Ne"}
+              </p>
+              <p>
+                <strong>RED IZO:</strong> {schoolDetails.red_izo}
+              </p>
+              <p>
+                <strong>RUAIn:</strong> {schoolDetails.ruain}
+              </p>
+            </div>
+          )}
+
+        </Modal>
+      )}
 
       {!selectedDistrict && (
         <GeoJSON
@@ -362,13 +406,10 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
       </MarkerClusterGroup>
 
       {selectedDistrict && selectedDistrict.nationalCode == "3812" ? (
-       <motion.button
-       onClick={zoomToRepublic}
-       className="zoom-back-button"
-     >
-       <IconArrowLeft />
-       Resetovat mapu
-     </motion.button>
+        <motion.button onClick={zoomToRepublic} className="zoom-back-button">
+          <IconArrowLeft />
+          Resetovat mapu
+        </motion.button>
       ) : (
         <motion.button
           onClick={selectedDistrict ? zoomOutToRegion : zoomToRepublic}

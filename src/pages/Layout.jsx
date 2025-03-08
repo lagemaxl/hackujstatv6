@@ -6,7 +6,7 @@ const Layout = () => {
     <>
       <nav>
         <div className="nav-content">
-          <h1>Mapa ČR</h1>
+          <h1>Mapa škol</h1>
           <ul>
             <li>
               <Link to="/">Mapa</Link>
