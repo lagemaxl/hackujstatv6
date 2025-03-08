@@ -16,10 +16,10 @@ const Home = () => {
   const [modalOpened, setModalOpened] = useState(false);
 
   useEffect(() => {
-    const firstVisit = localStorage.getItem("firstVisit");
+    const firstVisit = localStorage.getItem("firstVisittttt");
     if (!firstVisit) {
-      setModalOpened(true);
       localStorage.setItem("firstVisit", "true");
+      setModalOpened(true);
     }
   }, []);
 
@@ -73,8 +73,14 @@ const Home = () => {
 
   return (
     <div>
-      <Modal opened={modalOpened} onClose={() => setModalOpened(false)}>
-        <p>Zde můžete prozkoumat mapu krajů a okresů.</p>
+      <Modal
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+        title="Vítejte!"
+        size={"xl"}
+        centered
+      >
+        <p>Zde můžete prozkoumat mqpu škol.</p>
         <Button onClick={() => setModalOpened(false)}>Pokračovat</Button>
       </Modal>
 
@@ -136,6 +142,8 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
   const map = useMap();
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [schools, setSchools] = useState([]);
+  const [schoolDetails, setSchoolDetails] = useState(null);
+  const [schoolFinance, setSchoolFinance] = useState(null);
 
   useEffect(() => {
     if (region) {
@@ -152,7 +160,7 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
   const fetchSchools = async (district) => {
     try {
       const response = await fetch(
-        `https://hackujapi.ladislavpokorny.cz/school/${district.nationalCode}`,
+        `${import.meta.env.VITE_API_URL}/school/${district.nationalCode}`,
         {
           headers: { accept: "application/json" },
         }
@@ -210,6 +218,33 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
     iconAnchor: [16, 32],
     popupAnchor: [0, -32],
   });
+
+  const fetchSchoolDetails = async (redIzo) => {
+    try {
+      const response = await fetch(
+         `${import.meta.env.VITE_API_URL}/school/red_izo/${redIzo}`,
+        { headers: { accept: "application/json" } }
+      );
+      const data = await response.json();
+      setSchoolDetails(data);
+    } catch (error) {
+      console.error("Chyba při načítání detailů školy:", error);
+    }
+  };
+
+  const fetchSchoolFinance = async (redIzo) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/school/finance/1012/${redIzo}`,
+        { headers: { accept: "application/json" } }
+      );
+      const data = await response.json();
+      setSchoolFinance(data);
+      console.log(data);
+    } catch (error) {
+      console.error("Chyba při načítání financí školy:", error);
+    }
+  };
 
   return (
     <>
@@ -285,6 +320,21 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
                 <Popup>
                   <h3>{school.nazev}</h3>
                   <p>{school.zarizeni}</p>
+                  <Button
+                    onClick={() => {
+                      fetchSchoolDetails(school.red_izo);
+                      fetchSchoolFinance(school.red_izo);
+                    }}
+                  >
+                    Zobrazit více informací
+                  </Button>
+
+                  {schoolDetails &&
+                    schoolDetails.red_izo === school.red_izo && (
+                      <div>
+                        <p>IČO: {schoolDetails.ico}</p>
+                      </div>
+                    )}
                 </Popup>
               </Marker>
             );
