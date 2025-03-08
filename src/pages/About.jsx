@@ -9,8 +9,11 @@ import {
   IconExternalLink,
 } from "@tabler/icons-react";
 import { color, motion } from "motion/react";
+import { Switch, Group } from "@mantine/core";
 
 function About() {
+  const [kingMode, setKingMode] = useState(false);
+
   const authors = [
     {
       name: "Vojta Riedl",
@@ -174,6 +177,13 @@ function About() {
       </motion.ul>
 
       <h2>Dream Team</h2>
+      <Switch
+        size="sm"
+        onLabel="ON"
+        offLabel="OFF"
+        checked={kingMode}
+        onChange={(event) => setKingMode(event.currentTarget.checked)}
+      />
       <motion.div
         className="author-list"
         initial="hidden"
@@ -185,9 +195,20 @@ function About() {
         }}
       >
         {authors.map((author, index) => (
-          <AuthorCard key={index} {...author} custom={index} />
+          <AuthorCard
+            key={index}
+            {...author}
+            custom={index}
+            kingMode={kingMode}
+          />
         ))}
       </motion.div>
+      {/* WE GO BRRRRRRRRRRRRRRRRRRRRRRR! */}
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 }
@@ -204,8 +225,8 @@ function AuthorCard({
   school,
   schoolUrl,
   custom,
+  kingMode,
 }) {
-  const [kingMode, setKingMode] = useState(false);
   return (
     <motion.div
       className="author-card"
