@@ -132,82 +132,94 @@ const Home = () => {
 
 const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
   const map = useMap();
-  const moveEndRef = useRef(false); // Použití useRef k zabránění duplicitního volání
 
   useEffect(() => {
     if (region) {
-      const bounds = L.geoJSON(region.geometry).getBounds();
-      const center = bounds.getCenter();
+      const handleMoveEnd = () => {
+        onFlyEnd(region);
+        map.off("moveend", handleMoveEnd);
+      };
 
-      map.flyTo(center, 9, { duration: 0.5 });
-
-      if (!moveEndRef.current) {
-        // Zabráníme opakovanému přidání listeneru
-        moveEndRef.current = true;
-
-        const handleMoveEnd = () => {
-          onFlyEnd(region); // Zavoláme fetch okresů
-          map.off("moveend", handleMoveEnd); // Odebereme event listener
-          moveEndRef.current = false; // Resetujeme flag pro další interakci
-        };
-
-        map.on("moveend", handleMoveEnd);
-      }
+      map.flyToBounds(L.geoJSON(region).getBounds(), { duration: 0.5 });
+      map.on("moveend", handleMoveEnd);
     }
   }, [region, map, onFlyEnd]);
+
+  const zoomToDistrict = (district) => {
+    map.flyToBounds(L.geoJSON(district).getBounds(), { duration: 0.5 });
+    setSelectedDistrict(district);
+  };
+
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+
+  const zoomOutToRegion = () => {
+    setSelectedDistrict(null);
+    map.flyToBounds(L.geoJSON(region).getBounds(), { duration: 0.5 });
+  };
 
   const zoomToRepublic = () => {
     map.setView([49.7437572, 15.3386383], 8, { duration: 0.5 });
     onReset();
   };
 
+
   return (
     <>
-      {/* Zvýrazněný kraj */}
-      <GeoJSON
-        data={region}
-        style={{
-          fillColor: "var(--secondary)",
-          fillOpacity: 0.2,
-          color: "black",
-          weight: 2,
-        }}
-      />
+      {!selectedDistrict && (
+        <GeoJSON
+          data={region}
+          style={{
+            fillColor: "var(--secondary)",
+            fillOpacity: 0.2,
+            color: "black",
+            weight: 1.5,
+          }}
+        />
+      )}
 
-      {/* Zobrazení okresů */}
-      {districts && (
+      {districts && !selectedDistrict && (
         <GeoJSON
           data={districts}
           style={{
             fillColor: "var(--secondary)",
-            fillOpacity: 0.3,
+            fillOpacity: 0.2,
             color: "black",
             weight: 1,
           }}
           eventHandlers={{
             click: (e) => {
               const district = e.layer.feature;
+              zoomToDistrict(district);
               console.log("Kliknutý okres:", district.nationalCode);
             },
           }}
         />
       )}
 
+      {selectedDistrict && (
+        <GeoJSON
+          data={selectedDistrict}
+          style={{
+            fillColor: "var(--secondary)",
+            fillOpacity: 0.4,
+            color: "black",
+            weight: 1.5,
+          }}
+        />
+      )}
+
       <motion.button
-        onClick={zoomToRepublic}
+        onClick={selectedDistrict ? zoomOutToRegion :  zoomToRepublic}
         className="zoom-back-button"
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
       >
-        <IconArrowLeft /> Zpět
+        <IconArrowLeft /> {selectedDistrict ? "Zpět na kraj" : "Resetovat mapu"}
       </motion.button>
 
-      <motion.div
-        className="info-box"
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-      >
-        <h2>{region.name}</h2>
+      <motion.div className="info-box">
+        <h2>
+          {selectedDistrict ? selectedDistrict.name : region.name}
+          {selectedDistrict ? " (okres)" : " (kraj)"}
+        </h2>
       </motion.div>
     </>
   );
