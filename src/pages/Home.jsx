@@ -90,7 +90,7 @@ const Home = () => {
         size={"xl"}
         centered
       >
-        <p>Zde můžete prozkoumat mqpu škol.</p>
+        <p>Vítejte na mapě škol, tato aplikace slouží jako pomocník při hledání vaší vysněné školy. Můžete zde najít jak je škola financovaná, kolik má učeben či počet uchazečů.</p>
         <Button onClick={() => setModalOpened(false)}>Pokračovat</Button>
       </Modal>
 
