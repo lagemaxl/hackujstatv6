@@ -289,6 +289,7 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
           onClose={() => setSchoolDetails(null)}
           title={"Detail školy"}
           size={"xl"}
+          centered
         >
           <div className="school-info">
             {schoolDetails && (
@@ -457,27 +458,13 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
                 key={index}
                 position={[school.lantitude, school.lontitude]}
                 icon={icon}
-              >
-                <Popup>
-                  <h3>{school.nazev}</h3>
-                  <p>{school.zarizeni}</p>
-                  <Button
-                    onClick={() => {
-                      fetchSchoolDetails(school.red_izo);
-                      fetchSchoolFinance(school.red_izo);
-                    }}
-                  >
-                    Zobrazit více informací
-                  </Button>
-
-                  {schoolDetails &&
-                    schoolDetails.red_izo === school.red_izo && (
-                      <div>
-                        <p>IČO: {schoolDetails.ico}</p>
-                      </div>
-                    )}
-                </Popup>
-              </Marker>
+                eventHandlers={{
+                  click: () => {
+                    fetchSchoolDetails(school.red_izo);
+                    fetchSchoolFinance(school.red_izo);
+                  },
+                }}
+              ></Marker>
             );
           })}
       </MarkerClusterGroup>
