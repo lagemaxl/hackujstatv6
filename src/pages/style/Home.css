@@ -40,3 +40,14 @@
     font-size: 1.5em;
     color: var(--primary);
 }
+
+.school-info 
+{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    z-index: 1000;
+    position: absolute;
+    right: 0;
+    top: 5em;
+}

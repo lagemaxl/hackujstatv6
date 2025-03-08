@@ -7,6 +7,7 @@ import { IconArrowLeft, IconSchool } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { Modal, Button } from "@mantine/core";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+import { div } from "framer-motion/client";
 
 const Home = () => {
   const [geojsonData, setGeojsonData] = useState(null);
@@ -222,7 +223,7 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
   const fetchSchoolDetails = async (redIzo) => {
     try {
       const response = await fetch(
-         `${import.meta.env.VITE_API_URL}/school/red_izo/${redIzo}`,
+        `${import.meta.env.VITE_API_URL}/school/red_izo/${redIzo}`,
         { headers: { accept: "application/json" } }
       );
       const data = await response.json();
@@ -248,6 +249,22 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
 
   return (
     <>
+    
+      {/*
+{selectedDistrict && (
+ <div className="school-info">
+  <h3>Školy v okrese {selectedDistrict.name}</h3>
+  <ul>
+    {schools.map((school, index) => (
+      <li key={index}>
+        <IconSchool /> {school.nazev} ({school.zarizeni})
+      </li>
+    ))}
+  </ul>
+ </div> 
+)}
+*/}
+
       {!selectedDistrict && (
         <GeoJSON
           data={region}
