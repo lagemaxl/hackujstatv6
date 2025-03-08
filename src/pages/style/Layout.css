@@ -3,7 +3,7 @@ nav {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   z-index: 1000;
 }
 
@@ -52,3 +52,17 @@ nav a:hover {
   margin: 0 auto;
   margin-top: 60px;
 }
+
+.equation {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+  }
+  sup {
+    font-size: 0.8em;
+  }
+  .text {
+    font-size: 1.2em;
+  }
+  

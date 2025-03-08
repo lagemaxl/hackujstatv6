@@ -96,7 +96,7 @@ const Home = () => {
               setDistrictsGeojsonData(null);
               setLastFetchedRegion(null);
             }}
-            onFlyEnd={loadDistricts} 
+            onFlyEnd={loadDistricts}
             eventHandlers={{
               click: (e) => {
                 const region = e.layer.feature;
@@ -168,6 +168,12 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
             fillOpacity: 0.3,
             color: "black",
             weight: 1,
+          }}
+          eventHandlers={{
+            click: (e) => {
+              const district = e.layer.feature;
+              console.log("Kliknutý okres:", district.nationalCode);
+            },
           }}
         />
       )}

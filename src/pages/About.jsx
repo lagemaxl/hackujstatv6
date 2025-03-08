@@ -69,6 +69,25 @@ function About() {
 
   return (
     <div className="about-container">
+      <h1>No-Sleep Thermodynamic Efficiency</h1>
+      <p class="text">The efficiency of the bag chasing system follows:</p>
+      <p class="equation">
+        η<sub>chase</sub> =
+        <span>
+          STACK<sub>out</sub>
+        </span>{" "}
+        /
+        <span>
+          GRIND<sub>in</sub>
+        </span>
+        · (1 − SLEEP / DAY)
+      </p>
+
+      <p class="text">
+        This equation demonstrates that efficiency approaches maximum as SLEEP
+        approaches zero, validating the “no days off” principle.
+      </p>
+
       <h1>O aplikaci</h1>
       <p>
         Tento projekt vznikl na hackathonu{" "}
@@ -161,7 +180,11 @@ function AuthorCard({
       }
     >
       <img
-        src={name === "Vojta Riedl"  && kingMode ? "img/VojtaRiedlKing.jpg" : `img/${img}.jpg`}
+        src={
+          name === "Vojta Riedl" && kingMode
+            ? "img/VojtaRiedlKing.jpg"
+            : `img/${img}.jpg`
+        }
         alt={name}
         className="author-img"
       />
