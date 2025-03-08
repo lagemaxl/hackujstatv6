@@ -10,6 +10,8 @@ import {
   IconDeviceDesktop,
   IconDeviceLaptop,
   IconWifi,
+  IconFileDescription,
+  IconPercentage,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { Modal, Button, Table, Checkbox, Input } from "@mantine/core";
@@ -200,6 +202,7 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
   }, [selectedDistrict, districts]);
 
   const zoomOutToRegion = () => {
+    setSearchQuery("");
     setSelectedDistrict(null);
     setSchools([]);
     map.flyToBounds(L.geoJSON(region).getBounds(), { duration: 0.5 });
@@ -334,6 +337,31 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
                         {schoolDetails.pocet_studentu ?? "N/A"}
                       </Table.Td>
                     </Table.Tr>
+                    {/*  */}
+                    {schoolDetails.prihlaseni_cj && (
+                      <Table.Tr>
+                        <Table.Td>
+                          <IconFileDescription size={24} />
+                        </Table.Td>
+                        <Table.Td>
+                          <strong>Počet podaných přihlášek</strong>
+                        </Table.Td>
+                        <Table.Td>{schoolDetails.prihlaseni_cj}</Table.Td>
+                      </Table.Tr>
+                    )}
+                    {/*  */}
+                    {schoolDetails.percent_cj && (
+                      <Table.Tr>
+                        <Table.Td>
+                          <IconPercentage size={24} />
+                        </Table.Td>
+                        <Table.Td>
+                          <strong>Průměrné percentilové umístění</strong>
+                        </Table.Td>
+                        <Table.Td>{schoolDetails.percent_cj}</Table.Td>
+                      </Table.Tr>
+                    )}
+                    {/*  */}
                     <Table.Tr>
                       <Table.Td>
                         <IconChalkboard size={24} />
