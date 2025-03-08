@@ -2,7 +2,8 @@ import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import { useState, useEffect, useRef } from "react";
 import "./style/Home.css";
 import L from "leaflet";
-import { IconArrowLeft } from "@tabler/icons-react";
+import { Marker } from "react-leaflet";
+import { IconArrowLeft, IconSchool } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { Modal, Button } from "@mantine/core";
 
@@ -30,7 +31,7 @@ const Home = () => {
   }, []);
 
   const loadDistricts = async (region) => {
-    if (!region || region === lastFetchedRegion) return; // Fetchujeme pouze pokud je nový region
+    if (!region || region === lastFetchedRegion) return;
 
     try {
       const nationalCode = region.nationalCode;
@@ -132,6 +133,8 @@ const Home = () => {
 
 const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
   const map = useMap();
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [schools, setSchools] = useState([]);
 
   useEffect(() => {
     if (region) {
@@ -145,15 +148,32 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
     }
   }, [region, map, onFlyEnd]);
 
+  const fetchSchools = async (district) => {
+    try {
+      const response = await fetch(
+        `https://hackujapi.ladislavpokorny.cz/school/${district.nationalCode}`,
+        {
+          headers: { accept: "application/json" },
+        }
+      );
+      const schoolData = await response.json();
+      setSchools(schoolData);
+      console.log(schoolData);
+    } catch (error) {
+      console.error("Chyba při načítání škol:", error);
+      setSchools([]);
+    }
+  };
+
   const zoomToDistrict = (district) => {
     map.flyToBounds(L.geoJSON(district).getBounds(), { duration: 0.5 });
     setSelectedDistrict(district);
+    fetchSchools(district);
   };
-
-  const [selectedDistrict, setSelectedDistrict] = useState(null);
 
   const zoomOutToRegion = () => {
     setSelectedDistrict(null);
+    setSchools([]);
     map.flyToBounds(L.geoJSON(region).getBounds(), { duration: 0.5 });
   };
 
@@ -161,7 +181,6 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
     map.setView([49.7437572, 15.3386383], 8, { duration: 0.5 });
     onReset();
   };
-
 
   return (
     <>
@@ -190,7 +209,6 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
             click: (e) => {
               const district = e.layer.feature;
               zoomToDistrict(district);
-              console.log("Kliknutý okres:", district.nationalCode);
             },
           }}
         />
@@ -208,8 +226,18 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
         />
       )}
 
+      {schools &&
+        schools.map((school, index) => (
+          <Marker
+            key={index}
+            position={[school.lan, school.lon]}
+          >
+          </Marker>
+        ))}
+     
+
       <motion.button
-        onClick={selectedDistrict ? zoomOutToRegion :  zoomToRepublic}
+        onClick={selectedDistrict ? zoomOutToRegion : zoomToRepublic}
         className="zoom-back-button"
       >
         <IconArrowLeft /> {selectedDistrict ? "Zpět na kraj" : "Resetovat mapu"}
