@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, useMap, Popup } from "react-leaflet";
 import { useState, useEffect, useRef } from "react";
 import "./style/Home.css";
 import L from "leaflet";
@@ -182,6 +182,34 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
     onReset();
   };
 
+  const SkolkaIcon = L.icon({
+    iconUrl: "./icon/skolka.webp",
+    iconSize: [27, 37],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
+
+  const ZakladkaIcon = L.icon({
+    iconUrl: "./icon/zakladka.webp",
+    iconSize: [27, 37],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
+
+  const StredniIcon = L.icon({
+    iconUrl: "./icon/stredni.webp",
+    iconSize: [27, 37],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
+
+  const VejskaIcon = L.icon({
+    iconUrl: "./icon/vejska.webp",
+    iconSize: [27, 37],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
+
   return (
     <>
       {!selectedDistrict && (
@@ -227,14 +255,34 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
       )}
 
       {schools &&
-        schools.map((school, index) => (
-          <Marker
-            key={index}
-            position={[school.lan, school.lon]}
-          >
-          </Marker>
-        ))}
-     
+        schools.map((school, index) => {
+          let icon;
+          switch (school.zarizeni) {
+            case "Mateřská škola":
+              icon = SkolkaIcon;
+              break;
+            case "Základní škola":
+              icon = ZakladkaIcon;
+              break;
+            case "Střední škola":
+              icon = StredniIcon;
+              break;
+            case "Vyšší odborná škola":
+              icon = VejskaIcon;
+              break;
+            default:
+              icon = SkolkaIcon;
+          }
+
+          return (
+            <Marker key={index} position={[school.lantitude, school.lontitude]} icon={icon}>
+              <Popup>
+                <h3>{school.nazev}</h3>
+                <p>{school.zarizeni}</p>
+              </Popup>
+            </Marker>
+          );
+        })}
 
       <motion.button
         onClick={selectedDistrict ? zoomOutToRegion : zoomToRepublic}
