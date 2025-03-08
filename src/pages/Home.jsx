@@ -404,18 +404,19 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
           </div>
         </Modal>
       )}
-
-      <Checkbox.Group
-        label="Filtr škol podle kategorie"
-        value={selectedCategories}
-        onChange={setSelectedCategories}
-        className="school-filter"
-      >
-        <Checkbox value="Mateřská škola" label="Mateřská škola" />
-        <Checkbox value="Základní škola" label="Základní škola" />
-        <Checkbox value="Střední škola" label="Střední škola" />
-        <Checkbox value="Vyšší odborná škola" label="Vyšší odborná škola" />
-      </Checkbox.Group>
+      {selectedDistrict && (
+        <Checkbox.Group
+          label="Filtr škol podle kategorie"
+          value={selectedCategories}
+          onChange={setSelectedCategories}
+          className="school-filter"
+        >
+          <Checkbox value="Mateřská škola" label="Mateřská škola" />
+          <Checkbox value="Základní škola" label="Základní škola" />
+          <Checkbox value="Střední škola" label="Střední škola" />
+          <Checkbox value="Vyšší odborná škola" label="Vyšší odborná škola" />
+        </Checkbox.Group>
+      )}
 
       {!selectedDistrict && (
         <GeoJSON
