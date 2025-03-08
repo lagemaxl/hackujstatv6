@@ -26,6 +26,11 @@ p {
   display: inline-block;
 }
 
+.tech-list li:hover {
+  box-shadow: 0px 5px 9px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
 .author-list {
   display: flex;
   flex-wrap: wrap;
@@ -73,10 +78,9 @@ p {
 }
 
 .gold-text {
-  color: #FFD700;
-  text-shadow: 0px 0px 5px rgba(255, 215, 0, 0.6), 
-               0px 0px 10px rgba(255, 215, 0, 0.4),
-               0px 0px 15px rgba(255, 215, 0, 0.2);
+  color: #ffd700;
+  text-shadow: 0px 0px 5px rgba(255, 215, 0, 0.6),
+    0px 0px 10px rgba(255, 215, 0, 0.4), 0px 0px 15px rgba(255, 215, 0, 0.2);
 }
 
 .equation {
@@ -90,4 +94,16 @@ sup {
 }
 .text {
   font-size: 1.2em;
+}
+
+.link:visited {
+  color: blue;
+}
+
+.link:hover {
+  color: darkslateblue;
+}
+
+li {
+  color: var(--shade);
 }

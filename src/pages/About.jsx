@@ -6,6 +6,7 @@ import {
   IconWorld,
   IconSchool,
   IconMail,
+  IconExternalLink,
 } from "@tabler/icons-react";
 import { color, motion } from "motion/react";
 
@@ -44,7 +45,7 @@ function About() {
       linkedinUrl: "https://www.linkedin.com/in/kroupatom/",
       githubUrl: "https://github.com/LosBagros",
       webUrl: "http://bagros.eu/",
-      work: "DCUK, XDENT, CDN77",
+      work: "<></>",
       school: "SPSUL",
       schoolUrl: "https://www.spsul.cz/",
       maturita: false,
@@ -70,8 +71,8 @@ function About() {
   return (
     <div className="about-container">
       <h1>No-Sleep Thermodynamic Efficiency</h1>
-      <p class="text">The efficiency of the bag chasing system follows:</p>
-      <p class="equation">
+      <p className="text">The efficiency of the bag chasing system follows:</p>
+      <p className="equation">
         η<sub>chase</sub> =
         <span>
           STACK<sub>out</sub>
@@ -83,7 +84,7 @@ function About() {
         · (1 − SLEEP / DAY)
       </p>
 
-      <p class="text">
+      <p className="text">
         This equation demonstrates that efficiency approaches maximum as SLEEP
         approaches zero, validating the “no days off” principle.
       </p>
@@ -92,15 +93,53 @@ function About() {
       <p>
         Tento projekt vznikl na hackathonu{" "}
         <b>
-          <a href="https://hackujstat.cz/" target="_blank">
+          <a href="https://hackujstat.cz/" className="link" target="_blank">
             {" "}
             &lt;HackujStátv6/&gt;
           </a>
         </b>{" "}
         a slouží jako pomocník při hledání školy. Aplikace zobrazuje školy a
         školské zařízení v České republice a umožňuje vyhledávat podle různých
-        kritérií.đ
+        kritérií.
+        <br />
+        Aplikace vznikla za 24 hodin. <strong>Beze spánku</strong>
       </p>
+      <p>Zdroje Dat:</p>
+      <ul>
+        <li>
+          Rejstřík škol a školských zařízení - celá ČR{" "}
+          <a
+            href="https://data.gov.cz/datov%C3%A1-sada?iri=https%3A%2F%2Fdata.gov.cz%2Fzdroj%2Fdatov%C3%A9-sady%2F00022985%2F1c063ba63b80cbb7b0e600dfcd9a47d9"
+            target="_blank"
+            className="link"
+            rel="noopener noreferrer"
+          >
+            <IconExternalLink />
+          </a>
+        </li>
+        <li>
+          Statistická data o ICT ve školách v podobě otevřených dat{" "}
+          <a
+            href="https://msmt.gov.cz/vzdelavani/skolstvi-v-cr/statistika-skolstvi/otevrena-data"
+            target="_blank"
+            className="link"
+            rel="noopener noreferrer"
+          >
+            <IconExternalLink />
+          </a>
+        </li>
+        <li>
+          Monitor - státní pokladna{" "}
+          <a
+            href="https://github.com/VojtechRiedl/hackaton/blob/main/app/datasets/getdatav2.py"
+            target="_blank"
+            className="link"
+            rel="noopener noreferrer"
+          >
+            <IconExternalLink />
+          </a>
+        </li>
+      </ul>
 
       <h2>Technologie</h2>
       <h3>Frontend</h3>
@@ -134,7 +173,7 @@ function About() {
         <motion.li variants={itemVariants}>MariaDB</motion.li>
       </motion.ul>
 
-      <h2>Autoři</h2>
+      <h2>Dream Team</h2>
       <motion.div
         className="author-list"
         initial="hidden"
@@ -171,13 +210,14 @@ function AuthorCard({
     <motion.div
       className="author-card"
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: custom * 0.3 }}
       style={
         name === "Vojta Riedl" && kingMode
           ? { border: "2px solid gold", scale: "1.5", marginRight: "5em" }
           : {}
       }
+      viewport={{ once: true, amount: 0.15 }}
     >
       <img
         src={
