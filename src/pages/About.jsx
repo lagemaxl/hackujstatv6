@@ -105,7 +105,7 @@ function About() {
         školské zařízení v České republice a umožňuje vyhledávat podle různých
         kritérií.
         <br />
-        Aplikace vznikla za 24 hodin. <strong>Beze spánku</strong>
+        Aplikace vznikla za 24 hodin. <strong>Beze spánku!</strong>
       </p>
       <p>Zdroje Dat:</p>
       <ul>
@@ -124,6 +124,17 @@ function About() {
           Statistická data o ICT ve školách v podobě otevřených dat{" "}
           <a
             href="https://msmt.gov.cz/vzdelavani/skolstvi-v-cr/statistika-skolstvi/otevrena-data"
+            target="_blank"
+            className="link"
+            rel="noopener noreferrer"
+          >
+            <IconExternalLink />
+          </a>
+        </li>
+        <li>
+          Cermat - Agregované výsledky škol jednotné přijímací zkoušky{" "}
+          <a
+            href="https://data.cermat.cz/menu/data-a-analyticke-vystupy-jednotna-prijimaci-zkouska/agregovana-data-jpz/"
             target="_blank"
             className="link"
             rel="noopener noreferrer"
