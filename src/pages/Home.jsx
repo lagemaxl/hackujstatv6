@@ -12,7 +12,7 @@ import {
   IconWifi,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
-import { Modal, Button, Table} from "@mantine/core";
+import { Modal, Button, Table, Checkbox } from "@mantine/core";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { div } from "framer-motion/client";
 
@@ -151,6 +151,12 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
   const [schools, setSchools] = useState([]);
   const [schoolDetails, setSchoolDetails] = useState(null);
   const [schoolFinance, setSchoolFinance] = useState(null);
+  const [selectedCategories, setSelectedCategories] = useState([
+    "Mateřská škola",
+    "Základní škola",
+    "Střední škola",
+    "Vyšší odborná škola",
+  ]);
 
   useEffect(() => {
     if (region) {
@@ -265,6 +271,8 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
       minimumFractionDigits: 0,
     }).format(amount);
   };
+
+  const filteredSchools = schools.filter(school => selectedCategories.includes(school.zarizeni));
 
   return (
     <>
@@ -390,6 +398,18 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
         </Modal>
       )}
 
+      <Checkbox.Group
+        label="Filtr škol podle kategorie"
+        value={selectedCategories}
+        onChange={setSelectedCategories}
+        className="school-filter"
+      >
+        <Checkbox value="Mateřská škola" label="Mateřská škola" />
+        <Checkbox value="Základní škola" label="Základní škola" />
+        <Checkbox value="Střední škola" label="Střední škola" />
+        <Checkbox value="Vyšší odborná škola" label="Vyšší odborná škola" />
+      </Checkbox.Group>
+
       {!selectedDistrict && (
         <GeoJSON
           data={region}
@@ -432,10 +452,9 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
         />
       )}
 
-
       <MarkerClusterGroup>
-        {schools &&
-          schools.map((school, index) => {
+        {filteredSchools &&
+          filteredSchools.map((school, index) => {
             let icon;
             switch (school.zarizeni) {
               case "Mateřská škola":

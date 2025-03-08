@@ -57,3 +57,20 @@
 .school-finance .red {
   color: red;
 }
+
+.school-filter {
+    position: absolute;
+    top: 150px;
+    right: 10px;
+    z-index: 2000;
+    background-color: white;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 5px;
+}
+
+.school-filter label {
+    margin-top: 2px;
+}
