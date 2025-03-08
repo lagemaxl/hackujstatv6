@@ -74,3 +74,17 @@
 .school-filter label {
     margin-top: 2px;
 }
+
+.school-search {
+    position: absolute;
+    top: 83px;
+    right: 0px;
+    z-index: 2000;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 5px;
+    width: 300px;
+    height: 2em;
+}

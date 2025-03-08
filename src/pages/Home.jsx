@@ -432,6 +432,16 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
           </div>
         </Modal>
       )}
+
+      {selectedDistrict && (
+        <Input
+          placeholder="Hledej školu!"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="school-search"
+        />
+      )}
+
       {selectedDistrict && (
         <Checkbox.Group
           label="Filtr škol podle kategorie"
@@ -439,10 +449,10 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
           onChange={setSelectedCategories}
           className="school-filter"
         >
-          <Checkbox value="Mateřská škola" label="Mateřská škola" />
-          <Checkbox value="Základní škola" label="Základní škola" />
-          <Checkbox value="Střední škola" label="Střední škola" />
-          <Checkbox value="Vyšší odborná škola" label="Vyšší odborná škola" />
+          <Checkbox value="Mateřská škola" label="Mateřská škola" color="#ff5703" />
+          <Checkbox value="Základní škola" label="Základní škola" color="#3332fb" />
+          <Checkbox value="Střední škola" label="Střední škola" color="#21b710" />
+          <Checkbox value="Vyšší odborná škola" label="Vyšší odborná škola" color="#8b08ef" />
         </Checkbox.Group>
       )}
 
@@ -545,13 +555,6 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
           {selectedDistrict ? selectedDistrict.name : region.name}
           {selectedDistrict ? " (okres)" : " (kraj)"}
         </h2>
-        {selectedDistrict && (
-          <Input
-            placeholder="Hledej školu!"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        )}
       </motion.div>
     </>
   );
