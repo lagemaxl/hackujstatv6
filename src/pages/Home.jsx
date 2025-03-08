@@ -358,7 +358,7 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
                         <Table.Td>
                           <strong>Průměrné percentilové umístění</strong>
                         </Table.Td>
-                        <Table.Td>{schoolDetails.percent_cj}</Table.Td>
+                        <Table.Td>{schoolDetails.percent_cj} % </Table.Td>
                       </Table.Tr>
                     )}
                     {/*  */}
