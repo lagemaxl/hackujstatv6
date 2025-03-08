@@ -4,12 +4,22 @@ import "./style/Home.css";
 import L from "leaflet";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { motion } from "motion/react";
+import { Modal, Button } from "@mantine/core";
 
 const Home = () => {
   const [geojsonData, setGeojsonData] = useState(null);
   const [districtsGeojsonData, setDistrictsGeojsonData] = useState(null);
   const [selectedRegion, setSelectedRegion] = useState(null);
-  const [lastFetchedRegion, setLastFetchedRegion] = useState(null); // Ukládá poslední fetchnutý region
+  const [lastFetchedRegion, setLastFetchedRegion] = useState(null);
+  const [modalOpened, setModalOpened] = useState(false);
+
+  useEffect(() => {
+    const firstVisit = localStorage.getItem("firstVisit");
+    if (!firstVisit) {
+      setModalOpened(true);
+      localStorage.setItem("firstVisit", "true");
+    }
+  }, []);
 
   useEffect(() => {
     fetch(`kraje.json`)
@@ -61,6 +71,11 @@ const Home = () => {
 
   return (
     <div>
+      <Modal opened={modalOpened} onClose={() => setModalOpened(false)}>
+        <p>Zde můžete prozkoumat mapu krajů a okresů.</p>
+        <Button onClick={() => setModalOpened(false)}>Pokračovat</Button>
+      </Modal>
+
       <MapContainer
         center={[49.7437572, 15.3386383]}
         zoom={8}

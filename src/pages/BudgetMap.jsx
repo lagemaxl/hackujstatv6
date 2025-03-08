@@ -7,12 +7,20 @@ import { AmbientLight, PointLight, LightingEffect } from "@deck.gl/core";
 import { load } from "@loaders.gl/core";
 import { CSVLoader } from "@loaders.gl/csv";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { Loader } from "@mantine/core";
 
 const DATA_URL =
   "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv";
 
-const ambientLight = new AmbientLight({ color: [255, 255, 255], intensity: 1.0 });
-const pointLight1 = new PointLight({ color: [255, 255, 255], intensity: 0.8, position: [-122.4, 37.8, 80000] });
+const ambientLight = new AmbientLight({
+  color: [255, 255, 255],
+  intensity: 1.0,
+});
+const pointLight1 = new PointLight({
+  color: [255, 255, 255],
+  intensity: 0.8,
+  position: [-122.4, 37.8, 80000],
+});
 const lightingEffect = new LightingEffect({ ambientLight, pointLight1 });
 
 const INITIAL_VIEW_STATE = {
@@ -23,7 +31,8 @@ const INITIAL_VIEW_STATE = {
   bearing: -20,
 };
 
-const MAP_STYLE = "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json";
+const MAP_STYLE =
+  "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json";
 
 const colorRange = [
   [1, 152, 189],
@@ -36,6 +45,7 @@ const colorRange = [
 
 function BudgetMap() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     load(DATA_URL, CSVLoader).then((csvData) => {
@@ -43,8 +53,17 @@ function BudgetMap() {
         .map((d) => (Number.isFinite(d.lng) ? [d.lng, d.lat] : null))
         .filter(Boolean);
       setData(points);
+      setLoading(false);
     });
   }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <Loader position="center" />
+      </div>
+    );
+  }
 
   const layers = [
     new HexagonLayer({

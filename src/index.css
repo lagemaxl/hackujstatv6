@@ -3,6 +3,10 @@
 
 }
 
+html {
+  height: 0;
+}
+
 * {
   box-sizing: border-box;
 }
