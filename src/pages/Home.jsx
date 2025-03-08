@@ -90,7 +90,11 @@ const Home = () => {
         size={"xl"}
         centered
       >
-        <p>Vítejte na mapě škol, tato aplikace slouží jako pomocník při hledání Vaší vysněné školy. Můžete zde najít jak je škola financovaná, kolik má učeben či počet uchazečů.</p>
+        <p>
+          Vítejte na mapě škol, tato aplikace slouží jako pomocník při hledání
+          Vaší vysněné školy. Můžete zde najít jak je škola financovaná, kolik
+          má učeben či počet uchazečů.
+        </p>
         <Button onClick={() => setModalOpened(false)}>Pokračovat</Button>
       </Modal>
 
@@ -414,6 +418,12 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
               <>
                 <h3>Finanční informace</h3>
                 <div className="school-finance">
+                  {schoolFinance.aktiva > 0 && (
+                    <p>
+                      <strong>Aktiva:</strong>{" "}
+                      <span>{formatCurrency(schoolFinance.aktiva)}</span>
+                    </p>
+                  )}
                   <p>
                     <strong>Roční příjmy:</strong>{" "}
                     <span className="green">
@@ -449,10 +459,26 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
           onChange={setSelectedCategories}
           className="school-filter"
         >
-          <Checkbox value="Mateřská škola" label="Mateřská škola" color="#ff5703" />
-          <Checkbox value="Základní škola" label="Základní škola" color="#3332fb" />
-          <Checkbox value="Střední škola" label="Střední škola" color="#21b710" />
-          <Checkbox value="Vyšší odborná škola" label="Vyšší odborná škola" color="#8b08ef" />
+          <Checkbox
+            value="Mateřská škola"
+            label="Mateřská škola"
+            color="#ff5703"
+          />
+          <Checkbox
+            value="Základní škola"
+            label="Základní škola"
+            color="#3332fb"
+          />
+          <Checkbox
+            value="Střední škola"
+            label="Střední škola"
+            color="#21b710"
+          />
+          <Checkbox
+            value="Vyšší odborná škola"
+            label="Vyšší odborná škola"
+            color="#8b08ef"
+          />
         </Checkbox.Group>
       )}
 
