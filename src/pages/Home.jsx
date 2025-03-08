@@ -12,7 +12,7 @@ import {
   IconWifi,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
-import { Modal, Button, Table } from "@mantine/core";
+import { Modal, Button, Table} from "@mantine/core";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { div } from "framer-motion/client";
 
@@ -431,6 +431,7 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
           }}
         />
       )}
+
 
       <MarkerClusterGroup>
         {schools &&

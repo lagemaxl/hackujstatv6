@@ -41,16 +41,14 @@
   color: var(--primary);
 }
 
-.school-info h1{
+.school-info h1 {
   margin: 0;
 }
 
 .school-finance {
   display: flex;
   margin-bottom: 1em;
-}	
-
-
+}
 
 .school-finance .green {
   color: green;
