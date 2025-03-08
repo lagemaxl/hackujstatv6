@@ -41,11 +41,13 @@ function BudgetMap() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`https://hackujapi.ladislavpokorny.cz/school/finance/${year}`);
+        const response = await fetch(
+          `https://hackujapi.ladislavpokorny.cz/school/finance/${year}`
+        );
         const apiData = await response.json();
         const points = apiData.map((d) => ({
           position: [d.lontitude, d.lantitude],
-          height: d.aktiva / 100,
+          height: Math.min(d.aktiva / 100, 15000000),
         }));
         setData(points);
       } catch (error) {
@@ -106,32 +108,32 @@ function BudgetMap() {
         <Map mapStyle={MAP_STYLE} />
       </DeckGL>
       <div className="slider-cont">
-      <Slider
-        style={{ width: "80%", position: "absolute", bottom: "5em"}}
-        min={1012}
-        max={2312}
-        step={100}
-        showLabelOnHover={false}
-        value={sliderValue}
-        onChange={setSliderValue}
-        onChangeEnd={setYear}
-        marks={[
-          { value: 1012, label: "2010" },
-          { value: 1112, label: "2011" },
-          { value: 1212, label: "2012" },
-          { value: 1312, label: "2013" },
-          { value: 1412, label: "2014" },
-          { value: 1512, label: "2015" },
-          { value: 1612, label: "2016" },
-          { value: 1712, label: "2017" },
-          { value: 1812, label: "2018" },
-          { value: 1912, label: "2019" },
-          { value: 2012, label: "2020" },
-          { value: 2112, label: "2021" },
-          { value: 2212, label: "2022" },
-          { value: 2312, label: "2023" },
-        ]}
-      />
+        <Slider
+          style={{ width: "80%", position: "absolute", bottom: "5em" }}
+          min={1012}
+          max={2312}
+          step={100}
+          showLabelOnHover={false}
+          value={sliderValue}
+          onChange={setSliderValue}
+          onChangeEnd={setYear}
+          marks={[
+            { value: 1012, label: "2010" },
+            { value: 1112, label: "2011" },
+            { value: 1212, label: "2012" },
+            { value: 1312, label: "2013" },
+            { value: 1412, label: "2014" },
+            { value: 1512, label: "2015" },
+            { value: 1612, label: "2016" },
+            { value: 1712, label: "2017" },
+            { value: 1812, label: "2018" },
+            { value: 1912, label: "2019" },
+            { value: 2012, label: "2020" },
+            { value: 2112, label: "2021" },
+            { value: 2212, label: "2022" },
+            { value: 2312, label: "2023" },
+          ]}
+        />
       </div>
     </>
   );
