@@ -92,6 +92,8 @@ function About() {
         approaches zero, validating the “no days off” principle.
       </p>
 
+      <hr />
+
       <h1>O aplikaci</h1>
       <p>
         Tento projekt vznikl na hackathonu{" "}
@@ -154,6 +156,7 @@ function About() {
           </a>
         </li>
       </ul>
+      <hr />
 
       <h2>Technologie</h2>
       <h3>Frontend</h3>
@@ -186,6 +189,35 @@ function About() {
         <motion.li variants={itemVariants}>FastAPI</motion.li>
         <motion.li variants={itemVariants}>MariaDB</motion.li>
       </motion.ul>
+
+      <hr />
+
+      <h2>Repozitáře</h2>
+      <ul>
+        <li>
+          <a
+            target="_blank"
+            className="link"
+            rel="noopener noreferrer"
+            href="https://github.com/VojtechRiedl/hackaton"
+          >
+            Backend
+            <IconExternalLink />
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
+            className="link"
+            rel="noopener noreferrer"
+            href="https://github.com/lagemaxl/hackujstatv6"
+          >
+            Frontend
+            <IconExternalLink />
+          </a>
+        </li>
+      </ul>
+      <hr />
 
       <h2>Dream Team</h2>
       <Switch
