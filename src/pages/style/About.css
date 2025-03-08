@@ -71,3 +71,10 @@ p {
   gap: 5px;
   margin: 0;
 }
+
+.gold-text {
+  color: #FFD700;
+  text-shadow: 0px 0px 5px rgba(255, 215, 0, 0.6), 
+               0px 0px 10px rgba(255, 215, 0, 0.4),
+               0px 0px 15px rgba(255, 215, 0, 0.2);
+}

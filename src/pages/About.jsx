@@ -1,12 +1,13 @@
-import React from "react";
+import { useState } from "react";
 import "./style/About.css";
 import {
   IconBrandGithub,
   IconBrandLinkedin,
   IconWorld,
   IconSchool,
+  IconMail,
 } from "@tabler/icons-react";
-import { motion } from "framer-motion";
+import { color, motion } from "motion/react";
 
 function About() {
   const authors = [
@@ -21,6 +22,7 @@ function About() {
       workUrl: "https://dcuk.cz/",
       school: "UJEP",
       schoolUrl: "https://www.ujep.cz/",
+      maturita: true,
     },
     {
       name: "Ladislav Pokorný",
@@ -33,6 +35,7 @@ function About() {
       workUrl: "https://dcuk.cz/",
       school: "SPSUL",
       schoolUrl: "https://www.spsul.cz/",
+      maturita: false,
     },
     {
       name: "Tomáš Kroupa",
@@ -44,6 +47,7 @@ function About() {
       work: "DCUK, XDENT, CDN77",
       school: "SPSUL",
       schoolUrl: "https://www.spsul.cz/",
+      maturita: false,
     },
   ];
 
@@ -143,15 +147,30 @@ function AuthorCard({
   schoolUrl,
   custom,
 }) {
+  const [kingMode, setKingMode] = useState(false);
   return (
     <motion.div
       className="author-card"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: custom * 0.3 }}
+      style={
+        name === "Vojta Riedl" && kingMode
+          ? { border: "2px solid gold", scale: "1.5", marginRight: "5em" }
+          : {}
+      }
     >
-      <img src={`img/${img}.jpg`} alt={name} className="author-img" />
-      <h3>{name}</h3>
+      <img
+        src={name === "Vojta Riedl"  && kingMode ? "img/VojtaRiedlKing.jpg" : `img/${img}.jpg`}
+        alt={name}
+        className="author-img"
+      />
+
+      {name === "Vojta Riedl" && kingMode ? (
+        <h3 className="gold-text">{name}</h3>
+      ) : (
+        <h3>{name}</h3>
+      )}
       <a href={schoolUrl} target="_blank">
         <div className="school">
           <IconSchool color="black" /> <p>{school}</p>
@@ -160,11 +179,6 @@ function AuthorCard({
       <a href={workUrl} target="_blank">
         <p>{work}</p>
       </a>
-      <p>
-        <a href={`mailto:${email}`} className="email-link">
-          {email}
-        </a>
-      </p>
       <div className="author-links">
         {linkedinUrl && (
           <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
@@ -179,6 +193,11 @@ function AuthorCard({
         {webUrl && (
           <a href={webUrl} target="_blank" rel="noopener noreferrer">
             <IconWorld size={24} />
+          </a>
+        )}
+        {email && (
+          <a href={`mailto:${email}`} target="_blank" rel="noopener noreferrer">
+            <IconMail size={24} />
           </a>
         )}
       </div>

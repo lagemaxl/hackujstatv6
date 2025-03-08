@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import "./style/Home.css";
 import L from "leaflet";
 import { IconArrowLeft } from "@tabler/icons-react";
+import { motion } from "motion/react";
 
 const Home = () => {
   const [geojsonData, setGeojsonData] = useState(null);
@@ -95,7 +96,13 @@ const Home = () => {
               setDistrictsGeojsonData(null);
               setLastFetchedRegion(null);
             }}
-            onFlyEnd={loadDistricts} // Předáme funkci, která fetchne okresy jen jednou
+            onFlyEnd={loadDistricts} 
+            eventHandlers={{
+              click: (e) => {
+                const region = e.layer.feature;
+                console.log(region);
+              },
+            }}
           />
         )}
 
@@ -109,66 +116,80 @@ const Home = () => {
 };
 
 const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
-    const map = useMap();
-    const moveEndRef = useRef(false); // Použití useRef k zabránění duplicitního volání
-  
-    useEffect(() => {
-      if (region) {
-        const bounds = L.geoJSON(region.geometry).getBounds();
-        const center = bounds.getCenter();
-        
-        map.flyTo(center, 9, { duration: 0.5 });
-  
-        if (!moveEndRef.current) {  // Zabráníme opakovanému přidání listeneru
-          moveEndRef.current = true;
-  
-          const handleMoveEnd = () => {
-            onFlyEnd(region); // Zavoláme fetch okresů
-            map.off("moveend", handleMoveEnd); // Odebereme event listener
-            moveEndRef.current = false; // Resetujeme flag pro další interakci
-          };
-  
-          map.on("moveend", handleMoveEnd);
-        }
+  const map = useMap();
+  const moveEndRef = useRef(false); // Použití useRef k zabránění duplicitního volání
+
+  useEffect(() => {
+    if (region) {
+      const bounds = L.geoJSON(region.geometry).getBounds();
+      const center = bounds.getCenter();
+
+      map.flyTo(center, 9, { duration: 0.5 });
+
+      if (!moveEndRef.current) {
+        // Zabráníme opakovanému přidání listeneru
+        moveEndRef.current = true;
+
+        const handleMoveEnd = () => {
+          onFlyEnd(region); // Zavoláme fetch okresů
+          map.off("moveend", handleMoveEnd); // Odebereme event listener
+          moveEndRef.current = false; // Resetujeme flag pro další interakci
+        };
+
+        map.on("moveend", handleMoveEnd);
       }
-    }, [region, map, onFlyEnd]);
-  
-    const zoomToRepublic = () => {
-      map.setView([49.7437572, 15.3386383], 8, { duration: 0.5 });
-      onReset();
-    };
-  
-    return (
-      <>
-        {/* Zvýrazněný kraj */}
+    }
+  }, [region, map, onFlyEnd]);
+
+  const zoomToRepublic = () => {
+    map.setView([49.7437572, 15.3386383], 8, { duration: 0.5 });
+    onReset();
+  };
+
+  return (
+    <>
+      {/* Zvýrazněný kraj */}
+      <GeoJSON
+        data={region}
+        style={{
+          fillColor: "var(--secondary)",
+          fillOpacity: 0.2,
+          color: "black",
+          weight: 2,
+        }}
+      />
+
+      {/* Zobrazení okresů */}
+      {districts && (
         <GeoJSON
-          data={region}
+          data={districts}
           style={{
             fillColor: "var(--secondary)",
-            fillOpacity: 0.2,
+            fillOpacity: 0.3,
             color: "black",
-            weight: 2,
+            weight: 1,
           }}
         />
-  
-        {/* Zobrazení okresů */}
-        {districts && (
-          <GeoJSON
-            data={districts}
-            style={{
-              fillColor: "var(--secondary)",
-              fillOpacity: 0.3,
-              color: "black",
-              weight: 1,
-            }}
-          />
-        )}
-  
-        <button onClick={zoomToRepublic} className="zoom-back-button">
-          <IconArrowLeft /> Zpět
-        </button>
-      </>
-    );
-  };
-  
+      )}
+
+      <motion.button
+        onClick={zoomToRepublic}
+        className="zoom-back-button"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+      >
+        <IconArrowLeft /> Zpět
+      </motion.button>
+
+      <motion.div
+        className="info-box"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+      >
+        <h2>{region.name}</h2>
+      </motion.div>
+    </>
+  );
+};
+
 export default Home;
