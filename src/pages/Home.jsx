@@ -124,7 +124,6 @@ const Home = () => {
             eventHandlers={{
               click: (e) => {
                 const region = e.layer.feature;
-                console.log(region);
               },
             }}
           />
@@ -168,7 +167,6 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
       );
       const schoolData = await response.json();
       setSchools(schoolData);
-      console.log(schoolData);
     } catch (error) {
       console.error("Chyba při načítání škol:", error);
       setSchools([]);
@@ -180,6 +178,13 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
     setSelectedDistrict(district);
     fetchSchools(district);
   };
+
+  useEffect(() => {
+    if (region.name == "Hlavní město Praha") {
+      districts && zoomToDistrict(districts.features[0]);
+    }
+  }, [selectedDistrict, districts]);
+
 
   const zoomOutToRegion = () => {
     setSelectedDistrict(null);
@@ -241,7 +246,6 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
       );
       const data = await response.json();
       setSchoolFinance(data);
-      console.log(data);
     } catch (error) {
       console.error("Chyba při načítání financí školy:", error);
     }
@@ -249,7 +253,6 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
 
   return (
     <>
-    
       {/*
 {selectedDistrict && (
  <div className="school-info">
@@ -358,12 +361,23 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
           })}
       </MarkerClusterGroup>
 
-      <motion.button
-        onClick={selectedDistrict ? zoomOutToRegion : zoomToRepublic}
-        className="zoom-back-button"
-      >
-        <IconArrowLeft /> {selectedDistrict ? "Zpět na kraj" : "Resetovat mapu"}
-      </motion.button>
+      {selectedDistrict && selectedDistrict.nationalCode == "3812" ? (
+       <motion.button
+       onClick={zoomToRepublic}
+       className="zoom-back-button"
+     >
+       <IconArrowLeft />
+       Resetovat mapu
+     </motion.button>
+      ) : (
+        <motion.button
+          onClick={selectedDistrict ? zoomOutToRegion : zoomToRepublic}
+          className="zoom-back-button"
+        >
+          <IconArrowLeft />{" "}
+          {selectedDistrict ? "Zpět na kraj" : "Resetovat mapu"}
+        </motion.button>
+      )}
 
       <motion.div className="info-box">
         <h2>

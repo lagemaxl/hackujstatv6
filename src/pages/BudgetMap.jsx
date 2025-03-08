@@ -109,6 +109,7 @@ function BudgetMap() {
         min={1012}
         max={2312}
         step={100}
+        showLabelOnHover={false}
         value={sliderValue}
         onChange={setSliderValue}
         onChangeEnd={setYear}
