@@ -1,53 +1,61 @@
 .map {
-    height: 100dvh;
-    width: 100vw;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+  height: 100dvh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .zoom-back-button {
-    position: absolute;
-    top: 90px;
-    left: 10px;
-    z-index: 1000;
-    background-color: var(--secondary);
-    color: var(--primary);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  position: absolute;
+  top: 90px;
+  left: 10px;
+  z-index: 1000;
+  background-color: var(--secondary);
+  color: var(--primary);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .info-box {
-    position: absolute;
-    top: 150px;
-    left: 10px;
-    z-index: 1000;
-    background-color: var(--secondary);
-    color: var(--primary);
-    padding: 10px 20px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 150px;
+  left: 10px;
+  z-index: 1000;
+  background-color: var(--secondary);
+  color: var(--primary);
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .info-box h2 {
-    margin: 0;
-    font-size: 1.5em;
-    color: var(--primary);
+  margin: 0;
+  font-size: 1.5em;
+  color: var(--primary);
 }
 
-.school-info 
-{
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    z-index: 1000;
-    position: absolute;
-    right: 0;
-    top: 5em;
+.school-info h1{
+  margin: 0;
+}
+
+.school-finance {
+  display: flex;
+  margin-bottom: 1em;
+}	
+
+
+
+.school-finance .green {
+  color: green;
+}
+
+.school-finance .red {
+  color: red;
 }

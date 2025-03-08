@@ -4,8 +4,15 @@ import "./style/Home.css";
 import L from "leaflet";
 import { Marker } from "react-leaflet";
 import { IconArrowLeft, IconSchool } from "@tabler/icons-react";
+import {
+  IconUsers,
+  IconChalkboard,
+  IconDeviceDesktop,
+  IconDeviceLaptop,
+  IconWifi,
+} from "@tabler/icons-react";
 import { motion } from "motion/react";
-import { Modal, Button } from "@mantine/core";
+import { Modal, Button, Table } from "@mantine/core";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { div } from "framer-motion/client";
 
@@ -240,7 +247,7 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
   const fetchSchoolFinance = async (redIzo) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/school/finance/1012/${redIzo}`,
+        `${import.meta.env.VITE_API_URL}/school/finance/2312/${redIzo}`,
         { headers: { accept: "application/json" } }
       );
       const data = await response.json();
@@ -248,6 +255,15 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
     } catch (error) {
       console.error("Chyba při načítání financí školy:", error);
     }
+  };
+
+  const formatCurrency = (amount) => {
+    if (amount == null) return "N/A";
+    return new Intl.NumberFormat("cs-CZ", {
+      style: "currency",
+      currency: "CZK",
+      minimumFractionDigits: 0,
+    }).format(amount);
   };
 
   return (
@@ -271,44 +287,105 @@ const ZoomToRegion = ({ region, districts, onReset, onFlyEnd }) => {
         <Modal
           opened={Boolean(schoolDetails)}
           onClose={() => setSchoolDetails(null)}
-          title={schoolDetails?.nazev ?? "Detaily školy"}
+          title={"Detail školy"}
           size={"xl"}
         >
-          {schoolDetails && (
-            <div>
-              <p>
-                <strong>IČO:</strong> {schoolDetails.ico}
-              </p>
-              <p>
-                <strong>Ředitel:</strong> {schoolDetails.head_name}
-              </p>
-              <p>
-                <strong>Adresa:</strong> {schoolDetails.head_address}
-              </p>
-              <p>
-                <strong>Počet studentů:</strong> {schoolDetails.pocet_studentu}
-              </p>
-              <p>
-                <strong>Počet učeben:</strong> {schoolDetails.pocet_uceben}
-              </p>
-              <p>
-                <strong>Počet PC:</strong> {schoolDetails.pocet_pc}
-              </p>
-              <p>
-                <strong>Počet notebooků:</strong> {schoolDetails.pocet_notebook}
-              </p>
-              <p>
-                <strong>WiFi:</strong> {schoolDetails.wifi ? "Ano" : "Ne"}
-              </p>
-              <p>
-                <strong>RED IZO:</strong> {schoolDetails.red_izo}
-              </p>
-              <p>
-                <strong>RUAIn:</strong> {schoolDetails.ruain}
-              </p>
-            </div>
-          )}
-
+          <div className="school-info">
+            {schoolDetails && (
+              <div>
+                <h1>
+                  <strong>{schoolDetails.nazev || "N/A"}</strong>
+                </h1>
+                <p>
+                  <strong>IČO:</strong> {schoolDetails.ico || "N/A"}
+                </p>
+                <p>
+                  <strong>RED IZO:</strong> {schoolDetails.red_izo || "N/A"}
+                </p>
+                <p>
+                  <strong>Ředitel:</strong> {schoolDetails.head_name || "N/A"}
+                </p>
+                <Table>
+                  <Table.Tbody>
+                    <Table.Tr>
+                      <Table.Td>
+                        <IconUsers size={24} />
+                      </Table.Td>
+                      <Table.Td>
+                        <strong>Počet studentů</strong>
+                      </Table.Td>
+                      <Table.Td>
+                        {schoolDetails.pocet_studentu ?? "N/A"}
+                      </Table.Td>
+                    </Table.Tr>
+                    <Table.Tr>
+                      <Table.Td>
+                        <IconChalkboard size={24} />
+                      </Table.Td>
+                      <Table.Td>
+                        <strong>Počet učeben</strong>
+                      </Table.Td>
+                      <Table.Td>{schoolDetails.pocet_uceben ?? "N/A"}</Table.Td>
+                    </Table.Tr>
+                    <Table.Tr>
+                      <Table.Td>
+                        <IconDeviceDesktop size={24} />
+                      </Table.Td>
+                      <Table.Td>
+                        <strong>Počet PC</strong>
+                      </Table.Td>
+                      <Table.Td>{schoolDetails.pocet_pc ?? "N/A"}</Table.Td>
+                    </Table.Tr>
+                    <Table.Tr>
+                      <Table.Td>
+                        <IconDeviceLaptop size={24} />
+                      </Table.Td>
+                      <Table.Td>
+                        <strong>Počet notebooků</strong>
+                      </Table.Td>
+                      <Table.Td>
+                        {schoolDetails.pocet_notebook ?? "N/A"}
+                      </Table.Td>
+                    </Table.Tr>
+                    <Table.Tr>
+                      <Table.Td>
+                        <IconWifi size={24} />
+                      </Table.Td>
+                      <Table.Td>
+                        <strong>WiFi</strong>
+                      </Table.Td>
+                      <Table.Td>
+                        {schoolDetails.wifi != null
+                          ? schoolDetails.wifi
+                            ? "Ano"
+                            : "Ne"
+                          : "N/A"}
+                      </Table.Td>
+                    </Table.Tr>
+                  </Table.Tbody>
+                </Table>
+              </div>
+            )}
+            {schoolFinance && (
+              <>
+                <h3>Finanční informace</h3>
+                <div className="school-finance">
+                  <p>
+                    <strong>Roční příjmy:</strong>{" "}
+                    <span className="green">
+                      {formatCurrency(schoolFinance.vynosy)}
+                    </span>
+                  </p>
+                  <p>
+                    <strong>Roční náklady:</strong>{" "}
+                    <span className="red">
+                      {formatCurrency(schoolFinance.naklady)}
+                    </span>
+                  </p>
+                </div>
+              </>
+            )}
+          </div>
         </Modal>
       )}
 
